@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Behancer</string>
+    <string name="app_name">BehancerMDA</string>
     <string name="error">Something went wrong. Try again.</string>
     <string name="projects">Projects</string>
     <string name="content_description">Image</string>
