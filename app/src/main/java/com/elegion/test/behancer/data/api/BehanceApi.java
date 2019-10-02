@@ -21,5 +21,5 @@ public interface BehanceApi {
     Single<UserResponse> getUserInfo(@Path("username") String username);
 
     @GET("v2/users/{username}/projects")
-    Single<ProjectResponse> getUserProjects(@Path("user") String username);
+    Single<ProjectResponse> getUserProjects(@Path("username") String username);
 }

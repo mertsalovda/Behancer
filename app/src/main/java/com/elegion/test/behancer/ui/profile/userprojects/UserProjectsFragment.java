@@ -20,6 +20,7 @@ import com.elegion.test.behancer.data.Storage;
 import com.elegion.test.behancer.data.model.project.Project;
 import com.elegion.test.behancer.data.model.user.User;
 import com.elegion.test.behancer.ui.profile.ProfileFragment;
+import com.elegion.test.behancer.ui.projects.ProjectsAdapter;
 
 import java.util.List;
 
@@ -28,13 +29,13 @@ import java.util.List;
  */
 
 public class UserProjectsFragment extends PresenterFragment
-        implements UserProjectsView, Refreshable, UserProjectsAdapter.OnItemClickListener {
+        implements UserProjectsView, Refreshable {
 
     private RecyclerView mRecyclerView;
     private RefreshOwner mRefreshOwner;
     private View mErrorView;
     private Storage mStorage;
-    private UserProjectsAdapter mUserProjectsAdapter;
+    private ProjectsAdapter mProjectsAdapter;
     private User mUser;
 
     @InjectPresenter
@@ -86,9 +87,9 @@ public class UserProjectsFragment extends PresenterFragment
             getActivity().setTitle(R.string.projects);
         }
 
-        mUserProjectsAdapter = new UserProjectsAdapter(this);
+        mProjectsAdapter = new ProjectsAdapter(null);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(mUserProjectsAdapter);
+        mRecyclerView.setAdapter(mProjectsAdapter);
 
         mUser = (User) getActivity().getIntent().getExtras().get(ProfileFragment.USER_KEY);
 
@@ -111,7 +112,7 @@ public class UserProjectsFragment extends PresenterFragment
     public void showProjects(List<Project> projects) {
         mErrorView.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
-        mUserProjectsAdapter.addData(projects, true);
+        mProjectsAdapter.addData(projects, true);
     }
 
     @Override
@@ -128,10 +129,5 @@ public class UserProjectsFragment extends PresenterFragment
     public void showError() {
         mErrorView.setVisibility(View.VISIBLE);
         mRecyclerView.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onItemClick(String username) {
-
     }
 }
