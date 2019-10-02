@@ -1,42 +1,36 @@
-package com.elegion.test.behancer.ui.projects;
+package com.elegion.test.behancer.ui.profile.userprojects;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.elegion.test.behancer.BuildConfig;
 import com.elegion.test.behancer.common.BasePresenter;
 import com.elegion.test.behancer.data.Storage;
+import com.elegion.test.behancer.data.model.user.User;
+import com.elegion.test.behancer.data.model.user.UserResponse;
 import com.elegion.test.behancer.utils.ApiUtils;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 @InjectViewState
-public class ProjectsPresenter extends BasePresenter<ProjectsView> {
+public class UserProjectsPresenter extends BasePresenter<UserProjectsView> {
 
     private Storage mStorage;
 
-    public ProjectsPresenter(Storage mStorage) {
+    public UserProjectsPresenter(Storage mStorage) {
         this.mStorage = mStorage;
     }
 
-    public void getProjects() {
+    public void getProjects(String user) {
         mCompositeDisposable.add(ApiUtils.getApiService()
-                .getProjects(BuildConfig.API_QUERY)
-                .doOnSuccess(response -> mStorage.insertProjects(response))
-                .onErrorReturn(throwable ->
-                        ApiUtils.NETWORK_EXCEPTIONS.contains(throwable.getClass()) ? mStorage.getProjects() : null)
+                .getUserProjects(user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> getViewState().showRefresh())
                 .doFinally(() -> getViewState().hideRefresh())
                 .subscribe(
-                        response -> getViewState().showProjects(response.getProjects()),
+                        responses -> getViewState().showProjects(responses.getProjects()),
                         throwable -> getViewState().showError()));
 
     }
-
-    public void openProfileFragment(String username) {
-        getViewState().showProfileFragment(username);
-    }
-
 
 }

@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Vladislav Falzan.
  */
@@ -16,7 +18,7 @@ import com.google.gson.annotations.SerializedName;
         parentColumns = "id",
         childColumns = "user_id"
 ))
-public class Image {
+public class Image implements Serializable {
 
     @PrimaryKey
     @ColumnInfo(name = "id")

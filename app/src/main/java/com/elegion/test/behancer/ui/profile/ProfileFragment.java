@@ -1,13 +1,14 @@
 package com.elegion.test.behancer.ui.profile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,13 +20,10 @@ import com.elegion.test.behancer.common.RefreshOwner;
 import com.elegion.test.behancer.common.Refreshable;
 import com.elegion.test.behancer.data.Storage;
 import com.elegion.test.behancer.data.model.user.User;
-import com.elegion.test.behancer.utils.ApiUtils;
+import com.elegion.test.behancer.data.model.user.UserResponse;
+import com.elegion.test.behancer.ui.profile.userprojects.UserProjectsActivity;
 import com.elegion.test.behancer.utils.DateUtils;
 import com.squareup.picasso.Picasso;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Vladislav Falzan.
@@ -35,12 +33,14 @@ public class ProfileFragment extends PresenterFragment
         implements ProfileView, Refreshable {
 
     public static final String PROFILE_KEY = "PROFILE_KEY";
+    public static final String USER_KEY = "USER_KEY";
 
     private RefreshOwner mRefreshOwner;
     private View mErrorView;
     private View mProfileView;
     private String mUsername;
     private Storage mStorage;
+    private User mUser;
     @InjectPresenter
     ProfilePresenter mPresenter;
 
@@ -48,6 +48,7 @@ public class ProfileFragment extends PresenterFragment
     private TextView mProfileName;
     private TextView mProfileCreatedOn;
     private TextView mProfileLocation;
+    private Button mBtnAllProjects;
 
     @ProvidePresenter
     ProfilePresenter providePresenter(){
@@ -89,6 +90,13 @@ public class ProfileFragment extends PresenterFragment
         mProfileName = view.findViewById(R.id.tv_display_name_details);
         mProfileCreatedOn = view.findViewById(R.id.tv_created_on_details);
         mProfileLocation = view.findViewById(R.id.tv_location_details);
+        mBtnAllProjects = view.findViewById(R.id.btn_user_projects);
+
+        mBtnAllProjects.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), UserProjectsActivity.class);
+            intent.putExtra(USER_KEY, mUser);
+            startActivity(intent);
+        });
     }
 
     @Override
@@ -132,6 +140,7 @@ public class ProfileFragment extends PresenterFragment
     public void showProfile(User user) {
         mErrorView.setVisibility(View.GONE);
         mProfileView.setVisibility(View.VISIBLE);
+        mUser = user;
         bind(user);
     }
 
