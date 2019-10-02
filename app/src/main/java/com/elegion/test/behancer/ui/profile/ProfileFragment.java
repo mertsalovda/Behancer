@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.elegion.test.behancer.R;
 import com.elegion.test.behancer.common.PresenterFragment;
 import com.elegion.test.behancer.common.RefreshOwner;
@@ -29,7 +31,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by Vladislav Falzan.
  */
 
-public class ProfileFragment extends PresenterFragment<ProfilePresenter>
+public class ProfileFragment extends PresenterFragment
         implements ProfileView, Refreshable {
 
     public static final String PROFILE_KEY = "PROFILE_KEY";
@@ -39,12 +41,23 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
     private View mProfileView;
     private String mUsername;
     private Storage mStorage;
-    private ProfilePresenter mPresenter;
+    @InjectPresenter
+    ProfilePresenter mPresenter;
 
     private ImageView mProfileImage;
     private TextView mProfileName;
     private TextView mProfileCreatedOn;
     private TextView mProfileLocation;
+
+    @ProvidePresenter
+    ProfilePresenter providePresenter(){
+        return new ProfilePresenter(mStorage);
+    }
+
+    @Override
+    public ProfilePresenter getPresenter() {
+        return mPresenter;
+    }
 
     public static ProfileFragment newInstance(Bundle args) {
         ProfileFragment fragment = new ProfileFragment();
@@ -89,7 +102,6 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
         if (getActivity() != null) {
             getActivity().setTitle(mUsername);
         }
-        mPresenter = new ProfilePresenter(this, mStorage);
         mProfileView.setVisibility(View.VISIBLE);
 
         onRefreshData();
@@ -114,11 +126,6 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
     public void showError() {
         mErrorView.setVisibility(View.VISIBLE);
         mProfileView.setVisibility(View.GONE);
-    }
-
-    @Override
-    public ProfilePresenter getPresenter() {
-        return mPresenter;
     }
 
     @Override

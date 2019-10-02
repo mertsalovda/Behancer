@@ -1,5 +1,6 @@
 package com.elegion.test.behancer.ui.profile;
 
+import com.arellomobile.mvp.InjectViewState;
 import com.elegion.test.behancer.common.BasePresenter;
 import com.elegion.test.behancer.data.Storage;
 import com.elegion.test.behancer.utils.ApiUtils;
@@ -7,13 +8,12 @@ import com.elegion.test.behancer.utils.ApiUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class ProfilePresenter extends BasePresenter {
+@InjectViewState
+public class ProfilePresenter extends BasePresenter<ProfileView> {
 
-    private ProfileView mView;
     private Storage mStorage;
 
-    public ProfilePresenter(ProfileView mView, Storage mStorage) {
-        this.mView = mView;
+    public ProfilePresenter(Storage mStorage) {
         this.mStorage = mStorage;
     }
 
@@ -26,10 +26,10 @@ public class ProfilePresenter extends BasePresenter {
                                 mStorage.getUser(username) :
                                 null)
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposable -> mView.showRefresh())
-                .doFinally(() -> mView.hideRefresh())
+                .doOnSubscribe(disposable -> getViewState().showRefresh())
+                .doFinally(() -> getViewState().hideRefresh())
                 .subscribe(
-                        response -> mView.showProfile(response.getUser()),
-                        throwable -> mView.showError()));
+                        response -> getViewState().showProfile(response.getUser()),
+                        throwable -> getViewState().showError()));
     }
 }
