@@ -1,7 +1,7 @@
 package com.elegion.test.behancer.data.api;
 
 import com.elegion.test.behancer.data.model.project.ProjectResponse;
-import com.elegion.test.behancer.data.model.user.UserResponse;
+import com.elegion.test.behancer.data.model.user.*;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;
