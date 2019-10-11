@@ -39,6 +39,9 @@ public class User {
     @SerializedName("display_name")
     private String mDisplayName;
 
+    public User() {
+    }
+
     public int getId() {
         return mId;
     }
