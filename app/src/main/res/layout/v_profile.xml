@@ -4,9 +4,11 @@
 
     <data class = "ProfileItemBinding">
 
+        <import type="com.elegion.test.behancer.utils.DateUtils" />
+
         <variable
-            name="profile"
-            type="com.elegion.test.behancer.ui.profile.ProfileUserViewModel" />
+            name="user"
+            type="com.elegion.test.behancer.data.model.user.User" />
 
     </data>
 
@@ -21,12 +23,12 @@
             android:id="@+id/iv_profile"
             android:layout_width="128dp"
             android:layout_height="128dp"
-            app:imageUrl="@{profile.imageUrl}"
+            app:imageUrl="@{user.image.photoUrl}"
             android:contentDescription="@string/content_description_details" />
 
         <TextView
             android:id="@+id/tv_display_name_details"
-            android:text="@{profile.profileName}"
+            android:text="@{user.username}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/iv_profile"
@@ -39,7 +41,7 @@
 
         <TextView
             android:id="@+id/tv_username_details"
-            android:text="@{profile.profileDisplayName}"
+            android:text="@{user.displayName}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_display_name_details"
@@ -48,7 +50,7 @@
 
         <TextView
             android:id="@+id/tv_created_on_details"
-            android:text="@{profile.profileCreatedOn}"
+            android:text="@{DateUtils.format(user.createdOn)}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_username_details"
@@ -57,7 +59,7 @@
 
         <TextView
             android:id="@+id/tv_location_details"
-            android:text="@{profile.profileLocation}"
+            android:text="@{user.location}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_created_on_details"
