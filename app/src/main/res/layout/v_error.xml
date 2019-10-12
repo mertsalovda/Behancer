@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -12,13 +12,12 @@
             type="com.elegion.test.behancer.ui.profile.ProfileViewModel" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/errorView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="@{vm.isErrorVisible ? V.VISIBLE : V.GONE}">
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="wrap_content"

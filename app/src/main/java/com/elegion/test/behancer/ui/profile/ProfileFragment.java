@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.elegion.test.behancer.data.Storage;
 import com.elegion.test.behancer.databinding.ProfileBinding;
-import com.elegion.test.behancer.databinding.ProfileItemBinding;
 
 /**
  * Created by Vladislav Falzan.

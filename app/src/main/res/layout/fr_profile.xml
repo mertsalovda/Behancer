@@ -36,10 +36,14 @@
                 app:user="@{user}"
                 android:visibility="@{vm.isErrorVisible ? V.GONE : V.VISIBLE}" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="@{vm.isErrorVisible ? V.VISIBLE : V.GONE}">
             <include
-                layout="@layout/v_error"
-                app:vm="@{vm}"
-                android:visibility="@{vm.isErrorVisible ? V.VISIBLE : V.GONE}" />
+                layout="@layout/v_error"/>
+        </LinearLayout>
 
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
