@@ -1,13 +1,13 @@
 package com.elegion.test.behancer.ui.profile;
 
 import android.databinding.ObservableBoolean;
+import android.databinding.ObservableField;
 import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.elegion.test.behancer.data.Storage;
-import com.elegion.test.behancer.databinding.ProfileBinding;
+import com.elegion.test.behancer.data.model.user.User;
 import com.elegion.test.behancer.utils.ApiUtils;
 
-import java.lang.ref.WeakReference;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -19,9 +19,8 @@ public class ProfileViewModel {
     private String mUsername;
     private ObservableBoolean mIsErrorVisible = new ObservableBoolean(false);
     private ObservableBoolean mIsLoading = new ObservableBoolean(false);
+    private ObservableField<User> mUser = new ObservableField<>();
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = this::loadProfile;
-
-    private WeakReference<ProfileBinding> mProfileBinding;
 
     public ProfileViewModel(Storage storage) {
         mStorage = storage;
@@ -41,15 +40,13 @@ public class ProfileViewModel {
                 .subscribe(
                         response -> {
                             mIsErrorVisible.set(false);
-                            mProfileBinding.get().setUser(response.getUser()); // Устанавливаю User в ProfileBinding
-                            mProfileBinding.get().invalidateAll(); // Обновляю отображение
+                            mUser.set(response.getUser());
                         },
                         throwable -> mIsErrorVisible.set(true));
     }
 
     public void dispatchDetach() {
         mStorage = null;
-        mProfileBinding.clear();
         if (mDisposable != null) {
             mDisposable.dispose();
         }
@@ -71,7 +68,7 @@ public class ProfileViewModel {
         mUsername = username;
     }
 
-    public void setBinding(ProfileBinding binding){
-        mProfileBinding = new WeakReference<>(binding);
+    public ObservableField<User> getUser() {
+        return mUser;
     }
 }

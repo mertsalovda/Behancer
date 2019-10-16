@@ -45,7 +45,6 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ProfileBinding binding = ProfileBinding.inflate(inflater, container, false);
         binding.setVm(mProfileViewModel);
-        mProfileViewModel.setBinding(binding); // Передаю ProfileBinding в ProfileViewModel, чтобы после загрузки User отобразить его
         return binding.getRoot();
     }
 
