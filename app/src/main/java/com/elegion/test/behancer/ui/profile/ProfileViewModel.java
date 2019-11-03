@@ -3,6 +3,7 @@ package com.elegion.test.behancer.ui.profile;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.View;
 
 import com.elegion.test.behancer.data.Storage;
 import com.elegion.test.behancer.data.model.user.User;
@@ -22,12 +23,16 @@ public class ProfileViewModel {
     private ObservableField<User> mUser = new ObservableField<>();
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = this::loadProfile;
 
-    public ProfileViewModel(Storage storage) {
+    private View.OnClickListener mOnClickListener;
+
+    public ProfileViewModel(Storage storage, View.OnClickListener listener) {
         mStorage = storage;
+        mOnClickListener = listener;
     }
 
     public void loadProfile() {
-        mDisposable = ApiUtils.getApiService().getUserInfo(mUsername)
+        mDisposable = ApiUtils.getApiService()
+                .getUserInfo(mUsername)
                 .subscribeOn(Schedulers.io())
                 .doOnSuccess(response -> mStorage.insertUser(response))
                 .onErrorReturn(throwable ->
@@ -70,5 +75,9 @@ public class ProfileViewModel {
 
     public ObservableField<User> getUser() {
         return mUser;
+    }
+
+    public View.OnClickListener getOnClickListener() {
+        return mOnClickListener;
     }
 }

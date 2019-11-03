@@ -5,6 +5,8 @@ import android.databinding.BindingAdapter;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.elegion.test.behancer.data.model.project.RichProject;
@@ -29,5 +31,10 @@ public class CustomBindingAdapter {
     public static void configureSwipeRefreshLayout(SwipeRefreshLayout layout, boolean isLoading, SwipeRefreshLayout.OnRefreshListener listener) {
         layout.setOnRefreshListener(listener);
         layout.post(()->layout.setRefreshing(isLoading));
+    }
+
+    @BindingAdapter("bind:profileClick")
+    public static void setBtnClick(Button button, View.OnClickListener listener) {
+        button.setOnClickListener(listener);
     }
 }

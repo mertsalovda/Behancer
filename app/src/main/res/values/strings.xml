@@ -6,4 +6,7 @@
     <string name="separator">by</string>
     <string name="content_description_details">Image Detail</string>
     <string name="all_projects_user">Показать все проекты пользователя</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

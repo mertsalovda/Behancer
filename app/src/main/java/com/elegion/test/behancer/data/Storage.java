@@ -29,10 +29,6 @@ public class Storage {
         mBehanceDao = behanceDao;
     }
 
-    public void insertProjects(ProjectResponse response) {
-        insertProjects(response.getProjects());
-    }
-
     public void insertProjects(List<Project> projects) {
         mBehanceDao.insertProjects(projects);
 
@@ -54,12 +50,12 @@ public class Storage {
         return owners;
     }
 
-    public LiveData<List<RichProject>> getProjectsLive() {
-        return mBehanceDao.getProjectsLive();
-    }
-
     public LiveData<PagedList<RichProject>> getProjectsPaged() {
         return new LivePagedListBuilder<>(mBehanceDao.getProjectsPaged(), PAGE_SIZE).build();
+    }
+
+    public LiveData<PagedList<RichProject>> getUserProjectsPaged(String usermane) {
+        return new LivePagedListBuilder<>(mBehanceDao.getUserProjectsPaged(usermane), PAGE_SIZE).build();
     }
 
     public ProjectResponse getProjects() {
@@ -73,6 +69,7 @@ public class Storage {
 
         return response;
     }
+
 
     public void insertUser(UserResponse response) {
         User user = response.getUser();
