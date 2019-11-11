@@ -89,9 +89,4 @@ public class Storage {
 
         return response;
     }
-
-    public interface StorageOwner {
-        Storage obtainStorage();
-    }
-
 }

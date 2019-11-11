@@ -4,26 +4,22 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.elegion.test.behancer.AppDelegate;
 import com.elegion.test.behancer.R;
 import com.elegion.test.behancer.common.PresenterFragment;
 import com.elegion.test.behancer.common.RefreshOwner;
 import com.elegion.test.behancer.common.Refreshable;
-import com.elegion.test.behancer.data.Storage;
 import com.elegion.test.behancer.data.model.user.User;
-import com.elegion.test.behancer.utils.ApiUtils;
 import com.elegion.test.behancer.utils.DateUtils;
 import com.squareup.picasso.Picasso;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
+import javax.inject.Inject;
 
 /**
  * Created by Vladislav Falzan.
@@ -38,8 +34,8 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
     private View mErrorView;
     private View mProfileView;
     private String mUsername;
-    private Storage mStorage;
-    private ProfilePresenter mPresenter;
+    @Inject
+    ProfilePresenter mPresenter;
 
     private ImageView mProfileImage;
     private TextView mProfileName;
@@ -53,12 +49,16 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
         return fragment;
     }
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mStorage = context instanceof Storage.StorageOwner ? ((Storage.StorageOwner) context).obtainStorage() : null;
         mRefreshOwner = context instanceof RefreshOwner ? (RefreshOwner) context : null;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        AppDelegate.getAppComponent().inject(this);
     }
 
     @Nullable
@@ -89,7 +89,7 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
         if (getActivity() != null) {
             getActivity().setTitle(mUsername);
         }
-        mPresenter = new ProfilePresenter(this, mStorage);
+        mPresenter.setView(this);
         mProfileView.setVisibility(View.VISIBLE);
 
         onRefreshData();
@@ -140,7 +140,6 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
 
     @Override
     public void onDetach() {
-        mStorage = null;
         mRefreshOwner = null;
         super.onDetach();
     }

@@ -1,10 +1,11 @@
 package com.elegion.test.behancer;
 
 import android.app.Application;
-import android.arch.persistence.room.Room;
 
-import com.elegion.test.behancer.data.database.BehanceDatabase;
-import com.elegion.test.behancer.data.Storage;
+import com.elegion.test.behancer.di.AppComponent;
+import com.elegion.test.behancer.di.AppModule;
+import com.elegion.test.behancer.di.DaggerAppComponent;
+import com.elegion.test.behancer.di.NetworkModule;
 
 /**
  * Created by Vladislav Falzan.
@@ -12,20 +13,19 @@ import com.elegion.test.behancer.data.Storage;
 
 public class AppDelegate extends Application {
 
-    private Storage mStorage;
+    public static AppComponent sAppComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        final BehanceDatabase database = Room.databaseBuilder(this, BehanceDatabase.class, "behance_database")
-                .fallbackToDestructiveMigration()
+        sAppComponent = DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
+                .networkModule(new NetworkModule())
                 .build();
-
-        mStorage = new Storage(database.getBehanceDao());
     }
 
-    public Storage getStorage() {
-        return mStorage;
+    public static AppComponent getAppComponent() {
+        return sAppComponent;
     }
 }
