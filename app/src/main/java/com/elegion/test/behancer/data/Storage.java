@@ -54,8 +54,8 @@ public class Storage {
         return new LivePagedListBuilder<>(mBehanceDao.getProjectsPaged(), PAGE_SIZE).build();
     }
 
-    public LiveData<PagedList<RichProject>> getUserProjectsPaged(String usermane) {
-        return new LivePagedListBuilder<>(mBehanceDao.getUserProjectsPaged(usermane), PAGE_SIZE).build();
+    public LiveData<PagedList<RichProject>> getUserProjectsPaged(String username) {
+        return new LivePagedListBuilder<>(mBehanceDao.getUserProjectsPaged(username), PAGE_SIZE).build();
     }
 
     public ProjectResponse getProjects() {

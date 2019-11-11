@@ -1,5 +1,6 @@
 package com.elegion.test.behancer.data.model.project;
 
+import android.annotation.SuppressLint;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
@@ -9,6 +10,7 @@ import android.support.annotation.NonNull;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Created by Vladislav Falzan.
@@ -53,5 +55,20 @@ public class Owner implements Serializable {
 
     public void setProjectId(int projectId) {
         mProjectId = projectId;
+    }
+
+    @SuppressLint("NewApi")
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Owner owner = (Owner) o;
+        return Objects.equals(mUsername, owner.mUsername);
+    }
+
+    @SuppressLint("NewApi")
+    @Override
+    public int hashCode() {
+        return Objects.hash(mUsername);
     }
 }
