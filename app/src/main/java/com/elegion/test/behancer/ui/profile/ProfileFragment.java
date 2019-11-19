@@ -45,7 +45,6 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
     public static ProfileFragment newInstance(Bundle args) {
         ProfileFragment fragment = new ProfileFragment();
         fragment.setArguments(args);
-
         return fragment;
     }
 

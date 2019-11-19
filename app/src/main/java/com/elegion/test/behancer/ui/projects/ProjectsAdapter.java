@@ -12,6 +12,8 @@ import com.elegion.test.behancer.data.model.project.Project;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by Vladislav Falzan.
  */
@@ -20,9 +22,13 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsHolder> {
 
     @NonNull
     private final List<Project> mProjects = new ArrayList<>();
-    private final OnItemClickListener mOnItemClickListener;
+    private OnItemClickListener mOnItemClickListener;
 
-    public ProjectsAdapter(OnItemClickListener onItemClickListener) {
+    @Inject
+    public ProjectsAdapter() {
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
     }
 

@@ -34,7 +34,8 @@ public class ProjectsFragment extends PresenterFragment<ProjectsPresenter>
     private RecyclerView mRecyclerView;
     private RefreshOwner mRefreshOwner;
     private View mErrorView;
-    private ProjectsAdapter mProjectsAdapter;
+    @Inject
+    ProjectsAdapter mProjectsAdapter;
     @Inject
     ProjectsPresenter mPresenter;
 
@@ -77,7 +78,7 @@ public class ProjectsFragment extends PresenterFragment<ProjectsPresenter>
         }
 
         mPresenter.setView(this);
-        mProjectsAdapter = new ProjectsAdapter(this);
+        mProjectsAdapter.setOnItemClickListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mProjectsAdapter);
 

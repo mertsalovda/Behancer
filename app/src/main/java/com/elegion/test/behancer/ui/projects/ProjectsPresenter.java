@@ -18,6 +18,7 @@ public class ProjectsPresenter extends BasePresenter {
     BehanceApi mApi;
     @Inject
     Storage mStorage;
+
     @Inject
     public ProjectsPresenter() {
     }
