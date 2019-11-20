@@ -5,5 +5,6 @@ import com.elegion.test.behancer.data.model.user.User;
 
 public interface ProfileView extends BaseView {
 
+//    @StateStrategyType()
     void showProfile(User user);
 }

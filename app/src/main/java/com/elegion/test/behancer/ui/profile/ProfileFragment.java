@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.elegion.test.behancer.AppDelegate;
 import com.elegion.test.behancer.R;
 import com.elegion.test.behancer.common.PresenterFragment;
@@ -19,13 +21,11 @@ import com.elegion.test.behancer.data.model.user.User;
 import com.elegion.test.behancer.utils.DateUtils;
 import com.squareup.picasso.Picasso;
 
-import javax.inject.Inject;
-
 /**
  * Created by Vladislav Falzan.
  */
 
-public class ProfileFragment extends PresenterFragment<ProfilePresenter>
+public class ProfileFragment extends PresenterFragment
         implements ProfileView, Refreshable {
 
     public static final String PROFILE_KEY = "PROFILE_KEY";
@@ -34,12 +34,19 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
     private View mErrorView;
     private View mProfileView;
     private String mUsername;
-    ProfilePresenter mPresenter;
 
     private ImageView mProfileImage;
     private TextView mProfileName;
     private TextView mProfileCreatedOn;
     private TextView mProfileLocation;
+
+    @InjectPresenter
+    ProfilePresenter mPresenter;
+
+    @ProvidePresenter //Зачем нужен по заданию, если не передаю никаких параметров в пресентер, а все зависимости обеспечивает Dagger 2?
+    ProfilePresenter providePresenter() {
+        return new ProfilePresenter();
+    }
 
     public static ProfileFragment newInstance(Bundle args) {
         ProfileFragment fragment = new ProfileFragment();
@@ -56,7 +63,7 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppDelegate.getAppComponent().inject(this);
+        AppDelegate.getAppComponent().inject(mPresenter);
     }
 
     @Nullable
@@ -87,7 +94,6 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
         if (getActivity() != null) {
             getActivity().setTitle(mUsername);
         }
-        mPresenter.setView(this);
         mProfileView.setVisibility(View.VISIBLE);
 
         onRefreshData();

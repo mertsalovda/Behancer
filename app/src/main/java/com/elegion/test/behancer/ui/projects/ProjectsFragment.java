@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.elegion.test.behancer.AppDelegate;
 import com.elegion.test.behancer.R;
 import com.elegion.test.behancer.common.PresenterFragment;
@@ -28,7 +29,7 @@ import javax.inject.Inject;
  * Created by Vladislav Falzan.
  */
 
-public class ProjectsFragment extends PresenterFragment<ProjectsPresenter>
+public class ProjectsFragment extends PresenterFragment
         implements ProjectsView, Refreshable, ProjectsAdapter.OnItemClickListener {
 
     private RecyclerView mRecyclerView;
@@ -36,7 +37,8 @@ public class ProjectsFragment extends PresenterFragment<ProjectsPresenter>
     private View mErrorView;
     @Inject
     ProjectsAdapter mProjectsAdapter;
-    @Inject
+
+    @InjectPresenter
     ProjectsPresenter mPresenter;
 
     public static ProjectsFragment newInstance() {
@@ -55,6 +57,7 @@ public class ProjectsFragment extends PresenterFragment<ProjectsPresenter>
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppDelegate.getAppComponent().inject(this);
+        AppDelegate.getAppComponent().inject(mPresenter);
     }
 
     @Nullable
@@ -77,7 +80,6 @@ public class ProjectsFragment extends PresenterFragment<ProjectsPresenter>
             getActivity().setTitle(R.string.projects);
         }
 
-        mPresenter.setView(this);
         mProjectsAdapter.setOnItemClickListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mProjectsAdapter);
