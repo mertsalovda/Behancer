@@ -17,9 +17,6 @@ public class ProfilePresenter extends BasePresenter {
     BehanceApi mApi;
     @Inject
     Storage mStorage;
-    @Inject
-    public ProfilePresenter() {
-    }
 
     public void setView(ProfileView view) {
         mView = view;

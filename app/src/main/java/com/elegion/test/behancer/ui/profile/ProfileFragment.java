@@ -57,7 +57,8 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppDelegate.getAppComponent().inject(this);
+        AppDelegate.getProfileComponent().injectProfileFragment(this);
+        AppDelegate.getAppComponent().inject(mPresenter);
     }
 
     @Nullable
@@ -140,6 +141,9 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
     @Override
     public void onDetach() {
         mRefreshOwner = null;
+        if(this.getActivity().isFinishing()){
+            AppDelegate.clearProfileComponent();
+        }
         super.onDetach();
     }
 }
