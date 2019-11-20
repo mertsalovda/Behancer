@@ -34,7 +34,6 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
     private View mErrorView;
     private View mProfileView;
     private String mUsername;
-    @Inject
     ProfilePresenter mPresenter;
 
     private ImageView mProfileImage;
