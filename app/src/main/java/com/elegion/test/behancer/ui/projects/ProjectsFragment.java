@@ -22,8 +22,6 @@ import com.elegion.test.behancer.common.Refreshable;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 /**
  * Created by Vladislav Falzan.
  */
@@ -34,10 +32,9 @@ public class ProjectsFragment extends PresenterFragment<ProjectsPresenter>
     private RecyclerView mRecyclerView;
     private RefreshOwner mRefreshOwner;
     private View mErrorView;
-    @Inject
-    ProjectsAdapter mProjectsAdapter;
-    @Inject
-    ProjectsPresenter mPresenter;
+    private ProjectsAdapter mProjectsAdapter;
+
+    private ProjectsPresenter mPresenter;
 
     public static ProjectsFragment newInstance() {
         return new ProjectsFragment();
@@ -76,8 +73,10 @@ public class ProjectsFragment extends PresenterFragment<ProjectsPresenter>
         if (getActivity() != null) {
             getActivity().setTitle(R.string.projects);
         }
-
+        mPresenter = new ProjectsPresenter();
+        AppDelegate.getAppComponent().inject(mPresenter);
         mPresenter.setView(this);
+        mProjectsAdapter = new ProjectsAdapter();
         mProjectsAdapter.setOnItemClickListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mProjectsAdapter);

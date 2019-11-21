@@ -19,10 +19,6 @@ public class ProjectsPresenter extends BasePresenter {
     @Inject
     Storage mStorage;
 
-    @Inject
-    public ProjectsPresenter() {
-    }
-
     public void setView(ProjectsView view) {
         mView = view;
     }

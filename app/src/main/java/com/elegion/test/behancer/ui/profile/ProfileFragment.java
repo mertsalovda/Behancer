@@ -19,8 +19,6 @@ import com.elegion.test.behancer.data.model.user.User;
 import com.elegion.test.behancer.utils.DateUtils;
 import com.squareup.picasso.Picasso;
 
-import javax.inject.Inject;
-
 /**
  * Created by Vladislav Falzan.
  */
@@ -34,8 +32,8 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
     private View mErrorView;
     private View mProfileView;
     private String mUsername;
-    @Inject
-    ProfilePresenter mPresenter;
+
+    private ProfilePresenter mPresenter;
 
     private ImageView mProfileImage;
     private TextView mProfileName;
@@ -88,6 +86,8 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
         if (getActivity() != null) {
             getActivity().setTitle(mUsername);
         }
+        mPresenter = new ProfilePresenter();
+        AppDelegate.getAppComponent().inject(mPresenter);
         mPresenter.setView(this);
         mProfileView.setVisibility(View.VISIBLE);
 
