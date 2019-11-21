@@ -2,10 +2,15 @@ package com.elegion.test.behancer;
 
 import android.app.Application;
 
-import com.elegion.test.behancer.di.AppComponent;
 import com.elegion.test.behancer.di.AppModule;
-import com.elegion.test.behancer.di.DaggerAppComponent;
 import com.elegion.test.behancer.di.NetworkModule;
+
+import toothpick.Scope;
+import toothpick.Toothpick;
+import toothpick.configuration.Configuration;
+import toothpick.registries.FactoryRegistryLocator;
+import toothpick.registries.MemberInjectorRegistryLocator;
+import toothpick.smoothie.module.SmoothieApplicationModule;
 
 /**
  * Created by Vladislav Falzan.
@@ -13,19 +18,21 @@ import com.elegion.test.behancer.di.NetworkModule;
 
 public class AppDelegate extends Application {
 
-    public static AppComponent sAppComponent;
+    public static Scope sAppScope;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        sAppComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(this))
-                .networkModule(new NetworkModule())
-                .build();
+        Toothpick.setConfiguration(Configuration.forProduction().disableReflection());
+        MemberInjectorRegistryLocator.setRootRegistry(new com.elegion.test.behancer.MemberInjectorRegistry());
+        FactoryRegistryLocator.setRootRegistry(new com.elegion.test.behancer.FactoryRegistry());
+
+        sAppScope = Toothpick.openScope(AppDelegate.class);
+        sAppScope.installModules(new SmoothieApplicationModule(this), new NetworkModule(), new AppModule(this));
     }
 
-    public static AppComponent getAppComponent() {
-        return sAppComponent;
+    public static Scope getAppScope() {
+        return sAppScope;
     }
 }

@@ -5,25 +5,29 @@ import com.elegion.test.behancer.data.api.ApiKeyInterceptor;
 import com.elegion.test.behancer.data.api.BehanceApi;
 import com.google.gson.Gson;
 
-import javax.inject.Singleton;
-
-import dagger.Module;
-import dagger.Provides;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import toothpick.config.Module;
 
 /**
  * Created by tanchuev on 23.04.2018.
  */
+public class NetworkModule extends Module {
 
-@Module
-public class NetworkModule {
+    private final Gson mGson = provideGson();
+    private final OkHttpClient mOkHttpClient = provideClient();
+    private final Retrofit mRetrofit = provideRetrofit();
 
-    @Provides
-    @Singleton
+    public NetworkModule() {
+        bind(Gson.class).toInstance(mGson);
+        bind(OkHttpClient.class).toInstance(mOkHttpClient);
+        bind(Retrofit.class).toInstance(mRetrofit);
+        bind(BehanceApi.class).toInstance(provideApiService());
+    }
+
     OkHttpClient provideClient() {
         OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
         builder.addInterceptor(new ApiKeyInterceptor());
@@ -33,27 +37,21 @@ public class NetworkModule {
         return builder.build();
     }
 
-    @Provides
-    @Singleton
     Gson provideGson() {
         return new Gson();
     }
 
-    @Provides
-    @Singleton
-    Retrofit provideRetrofit(Gson gson, OkHttpClient client) {
+    Retrofit provideRetrofit() {
         return new Retrofit.Builder()
                 .baseUrl(BuildConfig.API_URL)
                 // need for interceptors
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(mOkHttpClient)
+                .addConverterFactory(GsonConverterFactory.create(mGson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 
-    @Provides
-    @Singleton
-    BehanceApi provideApiService(Retrofit retrofit) {
-        return retrofit.create(BehanceApi.class);
+    BehanceApi provideApiService() {
+        return mRetrofit.create(BehanceApi.class);
     }
 }

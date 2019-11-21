@@ -6,32 +6,26 @@ import com.elegion.test.behancer.AppDelegate;
 import com.elegion.test.behancer.data.Storage;
 import com.elegion.test.behancer.data.database.BehanceDatabase;
 
-import javax.inject.Singleton;
-
-import dagger.Module;
-import dagger.Provides;
+import toothpick.config.Module;
 
 /**
  * Created by tanchuev on 23.04.2018.
  */
 
-@Module
-public class AppModule {
+public class AppModule extends Module {
 
     private final AppDelegate mApp;
 
-    public AppModule(AppDelegate mApp) {
-        this.mApp = mApp;
+    public AppModule(AppDelegate app) {
+        this.mApp = app;
+        bind(AppDelegate.class).toInstance(provideApp());
+        bind(Storage.class).toInstance(provideStorage());
     }
 
-    @Provides
-    @Singleton
     AppDelegate provideApp() {
         return mApp;
     }
 
-    @Provides
-    @Singleton
     Storage provideStorage() {
         final BehanceDatabase database = Room.databaseBuilder(mApp, BehanceDatabase.class, "behance_database")
                 .fallbackToDestructiveMigration()

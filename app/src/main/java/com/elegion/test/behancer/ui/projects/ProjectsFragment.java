@@ -22,6 +22,10 @@ import com.elegion.test.behancer.common.Refreshable;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import toothpick.Toothpick;
+
 /**
  * Created by Vladislav Falzan.
  */
@@ -33,8 +37,8 @@ public class ProjectsFragment extends PresenterFragment<ProjectsPresenter>
     private RefreshOwner mRefreshOwner;
     private View mErrorView;
     private ProjectsAdapter mProjectsAdapter;
-
-    private ProjectsPresenter mPresenter;
+    @Inject
+    ProjectsPresenter mPresenter;
 
     public static ProjectsFragment newInstance() {
         return new ProjectsFragment();
@@ -51,7 +55,6 @@ public class ProjectsFragment extends PresenterFragment<ProjectsPresenter>
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppDelegate.getAppComponent().inject(this);
     }
 
     @Nullable
@@ -73,8 +76,7 @@ public class ProjectsFragment extends PresenterFragment<ProjectsPresenter>
         if (getActivity() != null) {
             getActivity().setTitle(R.string.projects);
         }
-        mPresenter = new ProjectsPresenter();
-        AppDelegate.getAppComponent().inject(mPresenter);
+        Toothpick.inject(this, AppDelegate.getAppScope());
         mPresenter.setView(this);
         mProjectsAdapter = new ProjectsAdapter();
         mProjectsAdapter.setOnItemClickListener(this);
