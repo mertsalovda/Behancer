@@ -43,7 +43,9 @@ public class ProfileFragment extends PresenterFragment
     @InjectPresenter
     ProfilePresenter mPresenter;
 
-    @ProvidePresenter //Зачем нужен по заданию, если не передаю никаких параметров в пресентер, а все зависимости обеспечивает Dagger 2?
+    // @ProvidePresenter здесь не нужен, т.к. не передаю никаких параметров в пресентер, а все зависимости обеспечивает Dagger 2
+    // Будет работать и без него также как в ProjectsFragment.
+    @ProvidePresenter
     ProfilePresenter providePresenter() {
         return new ProfilePresenter();
     }

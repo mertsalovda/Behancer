@@ -41,6 +41,8 @@ public class ProjectsFragment extends PresenterFragment
     @InjectPresenter
     ProjectsPresenter mPresenter;
 
+
+
     public static ProjectsFragment newInstance() {
         return new ProjectsFragment();
     }
