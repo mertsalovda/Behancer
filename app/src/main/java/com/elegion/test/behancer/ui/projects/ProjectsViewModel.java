@@ -6,29 +6,36 @@ import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.elegion.test.behancer.BuildConfig;
 import com.elegion.test.behancer.data.Storage;
+import com.elegion.test.behancer.data.api.BehanceApi;
 import com.elegion.test.behancer.data.model.project.Project;
 import com.elegion.test.behancer.utils.ApiUtils;
+
+import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class ProjectsViewModel {
+
+    @Inject
+    Storage mStorage;
+    @Inject
+    BehanceApi mBehanceApi;
+
     private Disposable mDisposable;
-    private Storage mStorage;
     private ProjectsAdapter.OnItemClickListener mOnItemClickListener;
     private ObservableBoolean mIsErrorVisible = new ObservableBoolean(false);
-    private ObservableBoolean mIsLoading= new ObservableBoolean(false);
+    private ObservableBoolean mIsLoading = new ObservableBoolean(false);
     private ObservableArrayList<Project> mProjects = new ObservableArrayList<>();
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = this::loadProjects;
 
-    public ProjectsViewModel(Storage storage, ProjectsAdapter.OnItemClickListener onItemClickListener) {
-        mStorage = storage;
-        mOnItemClickListener = onItemClickListener;
+    @Inject
+    public ProjectsViewModel() {
     }
 
     public void loadProjects() {
-        mDisposable = ApiUtils.getApiService().getProjects(BuildConfig.API_QUERY)
+        mDisposable = mBehanceApi.getProjects(BuildConfig.API_QUERY)
                 .doOnSuccess(response -> mStorage.insertProjects(response))
                 .onErrorReturn(throwable ->
                         ApiUtils.NETWORK_EXCEPTIONS.contains(throwable.getClass()) ? mStorage.getProjects() : null)
@@ -44,8 +51,9 @@ public class ProjectsViewModel {
                         throwable -> mIsErrorVisible.set(true));
     }
 
-    public void dispatchDetach(){
+    public void dispatchDetach() {
         mStorage = null;
+        mBehanceApi = null;
         if (mDisposable != null) {
             mDisposable.dispose();
         }
@@ -53,6 +61,10 @@ public class ProjectsViewModel {
 
     public ProjectsAdapter.OnItemClickListener getOnItemClickListener() {
         return mOnItemClickListener;
+    }
+
+    public void setOnItemClickListener(ProjectsAdapter.OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
     }
 
     public ObservableBoolean getIsErrorVisible() {

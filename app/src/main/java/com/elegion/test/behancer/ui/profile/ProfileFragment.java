@@ -9,8 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.elegion.test.behancer.data.Storage;
+import com.elegion.test.behancer.AppDelegate;
 import com.elegion.test.behancer.databinding.ProfileBinding;
+
+import javax.inject.Inject;
+
+import toothpick.Toothpick;
 
 /**
  * Created by Vladislav Falzan.
@@ -22,7 +26,7 @@ public class ProfileFragment extends Fragment {
 
     private String mUsername;
 
-    private ProfileViewModel mProfileViewModel;
+    @Inject ProfileViewModel mProfileViewModel;
 
     public static ProfileFragment newInstance(Bundle args) {
         ProfileFragment fragment = new ProfileFragment();
@@ -34,10 +38,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof Storage.StorageOwner) {
-            Storage storage = ((Storage.StorageOwner) context).obtainStorage();
-            mProfileViewModel = new ProfileViewModel(storage);
-        }
+        Toothpick.inject(this, AppDelegate.getAppScope());
     }
 
     @Nullable
@@ -45,7 +46,6 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ProfileBinding binding = ProfileBinding.inflate(inflater, container, false);
         binding.setVm(mProfileViewModel);
-        mProfileViewModel.setBinding(binding); // Передаю ProfileBinding в ProfileViewModel, чтобы после загрузки User отобразить его
         return binding.getRoot();
     }
 

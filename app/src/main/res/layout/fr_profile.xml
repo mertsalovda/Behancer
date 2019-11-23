@@ -33,7 +33,7 @@
 
             <include
                 layout="@layout/v_profile"
-                app:user="@{user}"
+                app:user="@{vm.user}"
                 android:visibility="@{vm.isErrorVisible ? V.GONE : V.VISIBLE}" />
 
         <LinearLayout
