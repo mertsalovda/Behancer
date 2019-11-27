@@ -30,6 +30,6 @@ public class ProfileServerRepository implements ProfileRepository {
     }
 
     @Override
-    public void insertUser(UserResponse response) {
+    public void insertUser(User user) {
     }
 }

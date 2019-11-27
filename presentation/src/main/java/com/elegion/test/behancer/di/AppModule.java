@@ -2,7 +2,6 @@ package com.elegion.test.behancer.di;
 
 import android.arch.persistence.room.Room;
 
-import com.elegion.data.Storage;
 import com.elegion.data.database.BehanceDao;
 import com.elegion.data.database.BehanceDatabase;
 import com.elegion.test.behancer.AppDelegate;
@@ -43,11 +42,5 @@ public class AppModule {
     @Singleton
     BehanceDao provideBehanceDao(BehanceDatabase database) {
         return database.getBehanceDao();
-    }
-
-    @Provides
-    @Singleton
-    Storage provideStorage(BehanceDao dao) {
-        return new Storage(dao);
     }
 }

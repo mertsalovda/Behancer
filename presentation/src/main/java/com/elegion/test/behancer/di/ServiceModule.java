@@ -1,5 +1,7 @@
 package com.elegion.test.behancer.di;
 
+import com.elegion.domain.service.ProfileService;
+import com.elegion.domain.service.ProfileServiceImpl;
 import com.elegion.domain.service.ProjectService;
 import com.elegion.domain.service.ProjectServiceImpl;
 
@@ -19,5 +21,11 @@ public class ServiceModule {
     @Singleton
     ProjectService provideProjectService(ProjectServiceImpl projectService){
         return projectService;
+    }
+
+    @Provides
+    @Singleton
+    ProfileService provideProfileService(ProfileServiceImpl profileService){
+        return profileService;
     }
 }

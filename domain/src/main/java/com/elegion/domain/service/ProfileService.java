@@ -1,12 +1,10 @@
-package com.elegion.domain.repository;
+package com.elegion.domain.service;
 
 import com.elegion.domain.model.user.User;
 
 import io.reactivex.Single;
 
-public interface ProfileRepository {
-    String SERVER = "SERVER";
-    String DB = "DB";
+public interface ProfileService {
 
     Single<User> getUser(String username);
 

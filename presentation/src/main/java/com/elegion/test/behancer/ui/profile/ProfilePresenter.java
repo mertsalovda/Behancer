@@ -1,9 +1,7 @@
 package com.elegion.test.behancer.ui.profile;
 
-import com.elegion.data.Storage;
-import com.elegion.data.api.BehanceApi;
+import com.elegion.domain.service.ProfileService;
 import com.elegion.test.behancer.common.BasePresenter;
-import com.elegion.domain.ApiUtils;
 
 import javax.inject.Inject;
 
@@ -13,10 +11,10 @@ import io.reactivex.schedulers.Schedulers;
 public class ProfilePresenter extends BasePresenter {
 
     private ProfileView mView;
+
     @Inject
-    BehanceApi mApi;
-    @Inject
-    Storage mStorage;
+    ProfileService mService;
+
     @Inject
     public ProfilePresenter() {
     }
@@ -26,18 +24,13 @@ public class ProfilePresenter extends BasePresenter {
     }
 
     public void getProfile(String username){
-        mCompositeDisposable.add(mApi.getUserInfo(username)
+        mCompositeDisposable.add(mService.getUser(username)
                 .subscribeOn(Schedulers.io())
-                .doOnSuccess(response -> mStorage.insertUser(response))
-                .onErrorReturn(throwable ->
-                        ApiUtils.NETWORK_EXCEPTIONS.contains(throwable.getClass()) ?
-                                mStorage.getUser(username) :
-                                null)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> mView.showRefresh())
                 .doFinally(() -> mView.hideRefresh())
                 .subscribe(
-                        response -> mView.showProfile(response.getUser()),
+                        response -> mView.showProfile(response),
                         throwable -> mView.showError()));
     }
 }

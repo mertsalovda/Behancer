@@ -3,7 +3,6 @@ package com.elegion.data.repository;
 import com.elegion.data.database.BehanceDao;
 import com.elegion.domain.model.user.Image;
 import com.elegion.domain.model.user.User;
-import com.elegion.domain.model.user.UserResponse;
 import com.elegion.domain.repository.ProfileRepository;
 
 import java.util.concurrent.Callable;
@@ -35,8 +34,7 @@ public class ProfileDBRepository implements ProfileRepository {
     }
 
     @Override
-    public void insertUser(UserResponse response) {
-        User user = response.getUser();
+    public void insertUser(User user) {
         Image image = user.getImage();
         image.setId(user.getId());
         image.setUserId(user.getId());
