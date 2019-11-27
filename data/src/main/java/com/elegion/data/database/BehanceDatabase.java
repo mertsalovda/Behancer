@@ -3,11 +3,11 @@ package com.elegion.data.database;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
-import com.elegion.data.model.project.Cover;
-import com.elegion.data.model.project.Owner;
-import com.elegion.data.model.project.Project;
-import com.elegion.data.model.user.Image;
-import com.elegion.data.model.user.User;
+import com.elegion.domain.model.project.Cover;
+import com.elegion.domain.model.project.Owner;
+import com.elegion.domain.model.project.Project;
+import com.elegion.domain.model.user.Image;
+import com.elegion.domain.model.user.User;
 
 /**
  * Created by Vladislav Falzan.

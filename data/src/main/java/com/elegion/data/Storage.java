@@ -3,13 +3,13 @@ package com.elegion.data;
 import android.support.v4.util.Pair;
 
 import com.elegion.data.database.BehanceDao;
-import com.elegion.data.model.project.Cover;
-import com.elegion.data.model.project.Owner;
-import com.elegion.data.model.project.Project;
-import com.elegion.data.model.project.ProjectResponse;
-import com.elegion.data.model.user.Image;
-import com.elegion.data.model.user.User;
-import com.elegion.data.model.user.UserResponse;
+import com.elegion.domain.model.project.Cover;
+import com.elegion.domain.model.project.Owner;
+import com.elegion.domain.model.project.Project;
+import com.elegion.domain.model.project.ProjectResponse;
+import com.elegion.domain.model.user.Image;
+import com.elegion.domain.model.user.User;
+import com.elegion.domain.model.user.UserResponse;
 import java.util.ArrayList;
 import java.util.List;
 

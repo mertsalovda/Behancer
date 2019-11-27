@@ -5,11 +5,11 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import com.elegion.data.model.project.Cover;
-import com.elegion.data.model.project.Owner;
-import com.elegion.data.model.project.Project;
-import com.elegion.data.model.user.Image;
-import com.elegion.data.model.user.User;
+import com.elegion.domain.model.project.Cover;
+import com.elegion.domain.model.project.Owner;
+import com.elegion.domain.model.project.Project;
+import com.elegion.domain.model.user.Image;
+import com.elegion.domain.model.user.User;
 
 import java.util.List;
 

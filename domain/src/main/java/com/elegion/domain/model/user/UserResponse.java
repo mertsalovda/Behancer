@@ -1,4 +1,4 @@
-package com.elegion.data.model.user;
+package com.elegion.domain.model.user;
 
 import com.google.gson.annotations.SerializedName;
 

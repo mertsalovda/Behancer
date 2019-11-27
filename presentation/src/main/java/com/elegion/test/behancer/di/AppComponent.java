@@ -12,7 +12,7 @@ import dagger.Component;
  */
 
 @Singleton
-@Component(modules = {AppModule.class, NetworkModule.class})
+@Component(modules = {AppModule.class, NetworkModule.class, RepositoryModule.class})
 public interface AppComponent {
 
     void inject(ProjectsFragment injector);

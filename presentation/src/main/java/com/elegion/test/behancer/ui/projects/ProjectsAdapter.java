@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.elegion.data.model.project.Project;
+import com.elegion.domain.model.project.Project;
 import com.elegion.test.behancer.R;
 
 import java.util.ArrayList;

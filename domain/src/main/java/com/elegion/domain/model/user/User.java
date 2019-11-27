@@ -1,4 +1,4 @@
-package com.elegion.data.model.user;
+package com.elegion.domain.model.user;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.elegion.data.model.project.Project;
+import com.elegion.domain.model.project.Project;
 import com.elegion.test.behancer.R;
 import com.elegion.test.behancer.utils.DateUtils;
 import com.squareup.picasso.Picasso;

@@ -1,7 +1,7 @@
 package com.elegion.data.api;
 
-import com.elegion.data.model.project.ProjectResponse;
-import com.elegion.data.model.user.UserResponse;
+import com.elegion.domain.model.project.ProjectResponse;
+import com.elegion.domain.model.user.UserResponse;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;
