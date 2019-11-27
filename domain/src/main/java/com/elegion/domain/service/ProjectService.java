@@ -1,4 +1,4 @@
-package com.elegion.domain.repository;
+package com.elegion.domain.service;
 
 import com.elegion.domain.model.project.Project;
 
@@ -6,10 +6,7 @@ import java.util.List;
 
 import io.reactivex.Single;
 
-public interface ProjectRepository {
-
-    String SERVER = "SERVER";
-    String DB = "DB";
+public interface ProjectService {
 
 
     Single<List<Project>> getProjects();

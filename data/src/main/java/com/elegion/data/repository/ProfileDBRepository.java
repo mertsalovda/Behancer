@@ -21,9 +21,6 @@ public class ProfileDBRepository implements ProfileRepository {
     public ProfileDBRepository() {
     }
 
-    @Inject
-
-
     @Override
     public Single<User> getUser(final String username) {
         return Single.fromCallable(new Callable<User>() {

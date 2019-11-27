@@ -23,28 +23,28 @@ public class RepositoryModule {
     @Provides
     @Singleton
     @Named(ProjectRepository.SERVER)
-    ProjectRepository provideProjectServerRepository() {
-        return new ProjectServerRepository();
+    ProjectRepository provideProjectServerRepository(ProjectServerRepository repository) {
+        return repository;
     }
 
     @Provides
     @Singleton
     @Named(ProjectRepository.DB)
-    ProjectRepository provideProjectDBRepository() {
-        return new ProjectDBRepository();
+    ProjectRepository provideProjectDBRepository(ProjectDBRepository repository) {
+        return repository;
     }
 
     @Provides
     @Singleton
     @Named(ProfileRepository.SERVER)
-    ProfileRepository provideProfileServerRepository() {
-        return new ProfileServerRepository();
+    ProfileRepository provideProfileServerRepository(ProfileServerRepository repository) {
+        return repository;
     }
 
     @Provides
     @Singleton
     @Named(ProfileRepository.DB)
-    ProfileRepository provideProfileDBRepository() {
-        return new ProfileDBRepository();
+    ProfileRepository provideProfileDBRepository(ProfileDBRepository repository) {
+        return repository;
     }
 }
