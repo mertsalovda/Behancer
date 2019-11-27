@@ -1,7 +1,10 @@
 package com.elegion.test.behancer.di;
 
+import com.elegion.data.repository.ProfileDBRepository;
+import com.elegion.data.repository.ProfileServerRepository;
 import com.elegion.data.repository.ProjectDBRepository;
 import com.elegion.data.repository.ProjectServerRepository;
+import com.elegion.domain.repository.ProfileRepository;
 import com.elegion.domain.repository.ProjectRepository;
 
 import javax.inject.Named;
@@ -29,5 +32,19 @@ public class RepositoryModule {
     @Named(ProjectRepository.DB)
     ProjectRepository provideProjectDBRepository() {
         return new ProjectDBRepository();
+    }
+
+    @Provides
+    @Singleton
+    @Named(ProfileRepository.SERVER)
+    ProfileRepository provideProfileServerRepository() {
+        return new ProfileServerRepository();
+    }
+
+    @Provides
+    @Singleton
+    @Named(ProfileRepository.DB)
+    ProfileRepository provideProfileDBRepository() {
+        return new ProfileDBRepository();
     }
 }
