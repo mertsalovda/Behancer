@@ -3,16 +3,12 @@ package com.elegion.test.behancer.ui.projects;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.elegion.domain.model.project.Project;
-import com.elegion.test.behancer.R;
+import com.elegion.test.behancer.databinding.ProjectBinding;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 /**
  * Created by Vladislav Falzan.
@@ -21,23 +17,21 @@ import javax.inject.Inject;
 public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsHolder> {
 
     @NonNull
-    private final List<Project> mProjects = new ArrayList<>();
-    private OnItemClickListener mOnItemClickListener;
+    private final List<Project> mProjects;
+    private final OnItemClickListener mOnItemClickListener;
 
-    @Inject
-    public ProjectsAdapter() {
-    }
-
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+    public ProjectsAdapter(List<Project> projects, OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
+        mProjects = projects;
     }
 
     @NonNull
     @Override
     public ProjectsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.li_projects, parent, false);
-        return new ProjectsHolder(view);
+        ProjectBinding binding = ProjectBinding.inflate(inflater, parent, false);
+
+        return new ProjectsHolder(binding);
     }
 
     @Override
@@ -49,17 +43,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsHolder> {
     @Override
     public int getItemCount() {
         return mProjects.size();
-    }
-
-    public void addData(List<Project> data, boolean isRefreshed) {
-        if (isRefreshed) {
-            mProjects.clear();
-        }
-
-        // TODO: 09.04.2018 ДЗ обработать кейс с data.size == 0 || data == null
-
-        mProjects.addAll(data);
-        notifyDataSetChanged();
     }
 
     public interface OnItemClickListener {

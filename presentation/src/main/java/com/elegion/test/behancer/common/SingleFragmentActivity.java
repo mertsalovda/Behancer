@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 
 import com.elegion.test.behancer.R;
@@ -13,22 +12,20 @@ import com.elegion.test.behancer.R;
  * Created by Vladislav Falzan.
  */
 
-public abstract class SingleFragmentActivity extends AppCompatActivity
-        implements SwipeRefreshLayout.OnRefreshListener, RefreshOwner {
-
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+public abstract class SingleFragmentActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ac_swipe_container);
-        mSwipeRefreshLayout = findViewById(R.id.refresher);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+        setContentView(getLayout());
 
         if (savedInstanceState == null) {
             changeFragment(getFragment());
         }
+    }
 
+    protected int getLayout(){
+        return R.layout.ac_container;
     }
 
     protected abstract Fragment getFragment();
@@ -45,20 +42,5 @@ public abstract class SingleFragmentActivity extends AppCompatActivity
         }
 
         transaction.commit();
-    }
-
-    @Override
-    public void onRefresh() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-        if (fragment instanceof Refreshable) {
-            ((Refreshable) fragment).onRefreshData();
-        } else {
-            setRefreshState(false);
-        }
-    }
-
-    @Override
-    public void setRefreshState(boolean refreshing) {
-        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(refreshing));
     }
 }
