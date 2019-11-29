@@ -1,6 +1,7 @@
 package com.elegion.test.behancer.ui.projects;
 
 import com.arellomobile.mvp.InjectViewState;
+import com.elegion.test.behancer.AppDelegate;
 import com.elegion.test.behancer.BuildConfig;
 import com.elegion.test.behancer.common.BasePresenter;
 import com.elegion.test.behancer.data.Storage;
@@ -19,6 +20,10 @@ public class ProjectsPresenter extends BasePresenter<ProjectsView> {
     BehanceApi mApi;
     @Inject
     Storage mStorage;
+
+    public ProjectsPresenter() {
+        AppDelegate.getAppComponent().inject(this);
+    }
 
     public void getProjects() {
         mCompositeDisposable.add(mApi.getProjects(BuildConfig.API_QUERY)

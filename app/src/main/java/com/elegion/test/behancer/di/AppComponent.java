@@ -1,7 +1,5 @@
 package com.elegion.test.behancer.di;
 
-import com.elegion.test.behancer.data.Storage;
-import com.elegion.test.behancer.ui.profile.ProfileFragment;
 import com.elegion.test.behancer.ui.profile.ProfilePresenter;
 import com.elegion.test.behancer.ui.projects.ProjectsFragment;
 import com.elegion.test.behancer.ui.projects.ProjectsPresenter;

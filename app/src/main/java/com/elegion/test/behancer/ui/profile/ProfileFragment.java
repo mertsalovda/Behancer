@@ -43,8 +43,6 @@ public class ProfileFragment extends PresenterFragment
     @InjectPresenter
     ProfilePresenter mPresenter;
 
-    // @ProvidePresenter здесь не нужен, т.к. не передаю никаких параметров в пресентер, а все зависимости обеспечивает Dagger 2
-    // Будет работать и без него также как в ProjectsFragment.
     @ProvidePresenter
     ProfilePresenter providePresenter() {
         return new ProfilePresenter();
@@ -65,7 +63,7 @@ public class ProfileFragment extends PresenterFragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppDelegate.getAppComponent().inject(mPresenter);
+
     }
 
     @Nullable

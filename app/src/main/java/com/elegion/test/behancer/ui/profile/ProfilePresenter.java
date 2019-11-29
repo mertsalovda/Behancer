@@ -1,6 +1,7 @@
 package com.elegion.test.behancer.ui.profile;
 
 import com.arellomobile.mvp.InjectViewState;
+import com.elegion.test.behancer.AppDelegate;
 import com.elegion.test.behancer.common.BasePresenter;
 import com.elegion.test.behancer.data.Storage;
 import com.elegion.test.behancer.data.api.BehanceApi;
@@ -18,6 +19,10 @@ public class ProfilePresenter extends BasePresenter<ProfileView> {
     BehanceApi mApi;
     @Inject
     Storage mStorage;
+
+    public ProfilePresenter() {
+        AppDelegate.getAppComponent().inject(this);
+    }
 
     public void getProfile(String username){
         mCompositeDisposable.add(mApi.getUserInfo(username)

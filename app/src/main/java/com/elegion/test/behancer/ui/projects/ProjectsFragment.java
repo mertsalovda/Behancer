@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.elegion.test.behancer.AppDelegate;
 import com.elegion.test.behancer.R;
 import com.elegion.test.behancer.common.PresenterFragment;
@@ -41,7 +42,10 @@ public class ProjectsFragment extends PresenterFragment
     @InjectPresenter
     ProjectsPresenter mPresenter;
 
-
+    @ProvidePresenter
+    ProjectsPresenter providePresenter(){
+        return new ProjectsPresenter();
+    }
 
     public static ProjectsFragment newInstance() {
         return new ProjectsFragment();
@@ -53,13 +57,12 @@ public class ProjectsFragment extends PresenterFragment
         if (context instanceof RefreshOwner) {
             mRefreshOwner = ((RefreshOwner) context);
         }
+        AppDelegate.getAppComponent().inject(this);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppDelegate.getAppComponent().inject(this);
-        AppDelegate.getAppComponent().inject(mPresenter);
     }
 
     @Nullable
