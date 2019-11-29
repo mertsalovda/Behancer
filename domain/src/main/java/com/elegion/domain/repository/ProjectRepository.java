@@ -7,10 +7,8 @@ import java.util.List;
 import io.reactivex.Single;
 
 public interface ProjectRepository {
-
     String SERVER = "SERVER";
     String DB = "DB";
-
 
     Single<List<Project>> getProjects();
 

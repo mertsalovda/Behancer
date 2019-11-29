@@ -14,6 +14,8 @@ import com.elegion.test.behancer.databinding.ProfileBinding;
 
 import javax.inject.Inject;
 
+import toothpick.Toothpick;
+
 /**
  * Created by Vladislav Falzan.
  */
@@ -35,13 +37,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        AppDelegate.getAppComponent().inject(this);
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        AppDelegate.getAppComponent().inject(this);
+        Toothpick.inject(this, AppDelegate.getAppScope());
     }
 
     @Nullable

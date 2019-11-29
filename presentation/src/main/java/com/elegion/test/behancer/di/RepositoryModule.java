@@ -7,44 +7,14 @@ import com.elegion.data.repository.ProjectServerRepository;
 import com.elegion.domain.repository.ProfileRepository;
 import com.elegion.domain.repository.ProjectRepository;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
+import toothpick.config.Module;
 
-import dagger.Module;
-import dagger.Provides;
+public class RepositoryModule extends Module {
 
-/**
- * Created by tanchuev on 23.04.2018.
- */
-
-@Module
-public class RepositoryModule {
-
-    @Provides
-    @Singleton
-    @Named(ProjectRepository.SERVER)
-    ProjectRepository provideProjectServerRepository(ProjectServerRepository repository) {
-        return repository;
-    }
-
-    @Provides
-    @Singleton
-    @Named(ProjectRepository.DB)
-    ProjectRepository provideProjectDBRepository(ProjectDBRepository repository) {
-        return repository;
-    }
-
-    @Provides
-    @Singleton
-    @Named(ProfileRepository.SERVER)
-    ProfileRepository provideProfileServerRepository(ProfileServerRepository repository) {
-        return repository;
-    }
-
-    @Provides
-    @Singleton
-    @Named(ProfileRepository.DB)
-    ProfileRepository provideProfileDBRepository(ProfileDBRepository repository) {
-        return repository;
+    public RepositoryModule() {
+        bind(ProjectRepository.class).withName(ProjectRepository.SERVER).to(ProjectServerRepository.class);
+        bind(ProjectRepository.class).withName(ProjectRepository.DB).to(ProjectDBRepository.class);
+        bind(ProfileRepository.class).withName(ProfileRepository.SERVER).to(ProfileServerRepository.class);
+        bind(ProfileRepository.class).withName(ProfileRepository.DB).to(ProfileDBRepository.class);
     }
 }

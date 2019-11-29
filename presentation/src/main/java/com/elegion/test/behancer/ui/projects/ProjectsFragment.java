@@ -1,5 +1,6 @@
 package com.elegion.test.behancer.ui.projects;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +17,8 @@ import com.elegion.test.behancer.ui.profile.ProfileActivity;
 import com.elegion.test.behancer.ui.profile.ProfileFragment;
 
 import javax.inject.Inject;
+
+import toothpick.Toothpick;
 
 /**
  * Created by Vladislav Falzan.
@@ -40,9 +43,9 @@ public class ProjectsFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        AppDelegate.getAppComponent().inject(this);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Toothpick.inject(this, AppDelegate.getAppScope());
         mProjectsViewModel.setOnItemClickListener(mOnItemClickListener);
     }
 
@@ -59,8 +62,8 @@ public class ProjectsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
             getActivity().setTitle(R.string.projects);
+            mProjectsViewModel.loadProjects();
         }
-        mProjectsViewModel.loadProjects();
     }
 
     @Override

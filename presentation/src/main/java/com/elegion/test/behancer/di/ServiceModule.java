@@ -5,27 +5,12 @@ import com.elegion.domain.service.ProfileServiceImpl;
 import com.elegion.domain.service.ProjectService;
 import com.elegion.domain.service.ProjectServiceImpl;
 
-import javax.inject.Singleton;
+import toothpick.config.Module;
 
-import dagger.Module;
-import dagger.Provides;
+public class ServiceModule extends Module {
 
-/**
- * Created by tanchuev on 23.04.2018.
- */
-
-@Module
-public class ServiceModule {
-
-    @Provides
-    @Singleton
-    ProjectService provideProjectService(ProjectServiceImpl projectService){
-        return projectService;
-    }
-
-    @Provides
-    @Singleton
-    ProfileService provideProfileService(ProfileServiceImpl profileService){
-        return profileService;
+    public ServiceModule() {
+        bind(ProjectService.class).to(ProjectServiceImpl.class);
+        bind(ProfileService.class).to(ProfileServiceImpl.class);
     }
 }

@@ -8,7 +8,6 @@ import io.reactivex.Single;
 
 public interface ProjectService {
 
-
     Single<List<Project>> getProjects();
 
     void insertProjects(List<Project> projects);
