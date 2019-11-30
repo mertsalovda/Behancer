@@ -57,7 +57,7 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppDelegate.getProfileComponent().injectProfileFragment(this);
+        AppDelegate.getProfileComponent().inject(this);
         AppDelegate.getAppComponent().inject(mPresenter);
     }
 

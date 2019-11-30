@@ -54,7 +54,8 @@ public class ProjectsFragment extends PresenterFragment<ProjectsPresenter>
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppDelegate.getAppComponent().inject(this);
+        AppDelegate.getProjectsComponent().inject(this);
+        AppDelegate.getAppComponent().inject(mPresenter);
     }
 
     @Nullable
@@ -82,7 +83,8 @@ public class ProjectsFragment extends PresenterFragment<ProjectsPresenter>
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mProjectsAdapter);
 
-        onRefreshData();
+        if (mProjectsAdapter.getItemCount() == 0)
+            onRefreshData();
     }
 
     @Override
@@ -93,6 +95,9 @@ public class ProjectsFragment extends PresenterFragment<ProjectsPresenter>
     @Override
     public void onDetach() {
         mRefreshOwner = null;
+        if (this.getActivity().isFinishing()) {
+            AppDelegate.clearProjectsComponent();
+        }
         super.onDetach();
     }
 

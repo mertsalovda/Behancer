@@ -29,10 +29,10 @@ public class ProjectsPresenter extends BasePresenter {
 
     public void getProjects() {
         mCompositeDisposable.add(mApi.getProjects(BuildConfig.API_QUERY)
+                .subscribeOn(Schedulers.io())
                 .doOnSuccess(response -> mStorage.insertProjects(response))
                 .onErrorReturn(throwable ->
                         ApiUtils.NETWORK_EXCEPTIONS.contains(throwable.getClass()) ? mStorage.getProjects() : null)
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> mView.showRefresh())
                 .doFinally(() -> mView.hideRefresh())

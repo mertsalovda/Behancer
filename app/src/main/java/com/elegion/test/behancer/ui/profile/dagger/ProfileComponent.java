@@ -8,5 +8,5 @@ import dagger.Subcomponent;
 @PerFragment
 @Subcomponent(modules = ProfileModule.class)
 public interface ProfileComponent {
-    void injectProfileFragment(ProfileFragment injector);
+    void inject(ProfileFragment injector);
 }

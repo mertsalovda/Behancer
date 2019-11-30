@@ -7,6 +7,7 @@ import com.elegion.test.behancer.di.AppModule;
 import com.elegion.test.behancer.di.DaggerAppComponent;
 import com.elegion.test.behancer.di.NetworkModule;
 import com.elegion.test.behancer.ui.profile.dagger.ProfileComponent;
+import com.elegion.test.behancer.ui.projects.dagger.ProjectsComponent;
 
 /**
  * Created by Vladislav Falzan.
@@ -16,6 +17,7 @@ public class AppDelegate extends Application {
 
     private static AppComponent sAppComponent;
     private static ProfileComponent sProfileComponent;
+    private static ProjectsComponent sProjectsComponent;
 
     @Override
     public void onCreate() {
@@ -36,6 +38,17 @@ public class AppDelegate extends Application {
 
     public static void clearProfileComponent(){
         sProfileComponent = null;
+    }
+
+    public static ProjectsComponent getProjectsComponent(){
+        if (sProjectsComponent == null){
+            sProjectsComponent = sAppComponent.createProjectsComponent();
+        }
+        return sProjectsComponent;
+    }
+
+    public static void clearProjectsComponent(){
+        sProjectsComponent = null;
     }
 
     public static AppComponent getAppComponent() {

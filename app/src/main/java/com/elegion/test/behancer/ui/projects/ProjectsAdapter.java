@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.elegion.test.behancer.R;
 import com.elegion.test.behancer.data.model.project.Project;
+import com.elegion.test.behancer.di.PerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
