@@ -6,7 +6,7 @@ import com.elegion.test.behancer.ui.profile.ProfileFragment;
 import dagger.Subcomponent;
 
 @PerFragment
-@Subcomponent(modules = ProfileModule.class)
+@Subcomponent(modules = {ProfileModule.class})
 public interface ProfileComponent {
     void inject(ProfileFragment injector);
 }

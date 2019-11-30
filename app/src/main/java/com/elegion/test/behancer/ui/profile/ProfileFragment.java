@@ -16,6 +16,8 @@ import com.elegion.test.behancer.common.PresenterFragment;
 import com.elegion.test.behancer.common.RefreshOwner;
 import com.elegion.test.behancer.common.Refreshable;
 import com.elegion.test.behancer.data.model.user.User;
+import com.elegion.test.behancer.di.DaggerViewComponent;
+import com.elegion.test.behancer.di.ViewModule;
 import com.elegion.test.behancer.utils.DateUtils;
 import com.squareup.picasso.Picasso;
 
@@ -49,16 +51,24 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
     }
 
     @Override
+    public ProfilePresenter getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        AppDelegate.getProfileComponent().inject(this);
+        DaggerViewComponent.builder()
+                .appComponent(AppDelegate.getAppComponent())
+                .viewModule(new ViewModule(this))
+                .build().inject(mPresenter);
         mRefreshOwner = context instanceof RefreshOwner ? (RefreshOwner) context : null;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppDelegate.getProfileComponent().inject(this);
-        AppDelegate.getAppComponent().inject(mPresenter);
     }
 
     @Nullable
@@ -89,7 +99,6 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
         if (getActivity() != null) {
             getActivity().setTitle(mUsername);
         }
-        mPresenter.setView(this);
         mProfileView.setVisibility(View.VISIBLE);
 
         onRefreshData();
@@ -117,11 +126,6 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
     }
 
     @Override
-    public ProfilePresenter getPresenter() {
-        return mPresenter;
-    }
-
-    @Override
     public void showProfile(User user) {
         mErrorView.setVisibility(View.GONE);
         mProfileView.setVisibility(View.VISIBLE);
@@ -141,7 +145,7 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
     @Override
     public void onDetach() {
         mRefreshOwner = null;
-        if(this.getActivity().isFinishing()){
+        if (this.getActivity().isFinishing()) {
             AppDelegate.clearProfileComponent();
         }
         super.onDetach();

@@ -2,10 +2,12 @@ package com.elegion.test.behancer;
 
 import android.app.Application;
 
+import com.elegion.test.behancer.common.BaseView;
 import com.elegion.test.behancer.di.AppComponent;
 import com.elegion.test.behancer.di.AppModule;
 import com.elegion.test.behancer.di.DaggerAppComponent;
 import com.elegion.test.behancer.di.NetworkModule;
+import com.elegion.test.behancer.di.ViewModule;
 import com.elegion.test.behancer.ui.profile.dagger.ProfileComponent;
 import com.elegion.test.behancer.ui.projects.dagger.ProjectsComponent;
 

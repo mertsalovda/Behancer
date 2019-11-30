@@ -15,6 +15,8 @@ import com.elegion.test.behancer.AppDelegate;
 import com.elegion.test.behancer.R;
 import com.elegion.test.behancer.common.PresenterFragment;
 import com.elegion.test.behancer.data.model.project.Project;
+import com.elegion.test.behancer.di.DaggerViewComponent;
+import com.elegion.test.behancer.di.ViewModule;
 import com.elegion.test.behancer.ui.profile.ProfileActivity;
 import com.elegion.test.behancer.ui.profile.ProfileFragment;
 import com.elegion.test.behancer.common.RefreshOwner;
@@ -46,6 +48,11 @@ public class ProjectsFragment extends PresenterFragment<ProjectsPresenter>
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        AppDelegate.getProjectsComponent().inject(this);
+        DaggerViewComponent.builder()
+                .appComponent(AppDelegate.getAppComponent())
+                .viewModule(new ViewModule(this))
+                .build().inject(mPresenter);
         if (context instanceof RefreshOwner) {
             mRefreshOwner = ((RefreshOwner) context);
         }
@@ -54,8 +61,6 @@ public class ProjectsFragment extends PresenterFragment<ProjectsPresenter>
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppDelegate.getProjectsComponent().inject(this);
-        AppDelegate.getAppComponent().inject(mPresenter);
     }
 
     @Nullable
@@ -78,7 +83,6 @@ public class ProjectsFragment extends PresenterFragment<ProjectsPresenter>
             getActivity().setTitle(R.string.projects);
         }
 
-        mPresenter.setView(this);
         mProjectsAdapter.setOnItemClickListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mProjectsAdapter);

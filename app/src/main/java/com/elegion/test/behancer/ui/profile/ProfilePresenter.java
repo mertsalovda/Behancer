@@ -12,17 +12,14 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ProfilePresenter extends BasePresenter {
 
-    private ProfileView mView;
+    @Inject
+    ProfileView mView;
     @Inject
     BehanceApi mApi;
     @Inject
     Storage mStorage;
 
-    public void setView(ProfileView view) {
-        mView = view;
-    }
-
-    public void getProfile(String username){
+    public void getProfile(String username) {
         mCompositeDisposable.add(mApi.getUserInfo(username)
                 .subscribeOn(Schedulers.io())
                 .doOnSuccess(response -> mStorage.insertUser(response))
