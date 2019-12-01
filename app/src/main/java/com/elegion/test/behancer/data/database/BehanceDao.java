@@ -1,3 +1,4 @@
+
 package com.elegion.test.behancer.data.database;
 
 import android.arch.lifecycle.LiveData;
@@ -46,7 +47,7 @@ public interface BehanceDao {
     @Query("select * from project order by published_on desc")
     DataSource.Factory<Integer, RichProject> getProjectsPaged();
 
-    @Query("select * from project")
+    @Query("select * from project where id IN (select project_id from owner where username = :username)")
     DataSource.Factory<Integer, RichProject> getUserProjectsPaged(String username);
 
     @Query("select * from owner where project_id = :projectId")
