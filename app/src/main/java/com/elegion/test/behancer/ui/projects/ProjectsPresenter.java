@@ -21,6 +21,7 @@ public class ProjectsPresenter extends BasePresenter<ProjectsView> {
     @Inject
     Storage mStorage;
 
+    @Inject
     public ProjectsPresenter() {
         AppDelegate.getAppComponent().inject(this);
     }

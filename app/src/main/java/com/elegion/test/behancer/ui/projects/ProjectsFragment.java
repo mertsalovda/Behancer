@@ -40,11 +40,12 @@ public class ProjectsFragment extends PresenterFragment
     ProjectsAdapter mProjectsAdapter;
 
     @InjectPresenter
+    @Inject
     ProjectsPresenter mPresenter;
 
     @ProvidePresenter
-    ProjectsPresenter providePresenter(){
-        return new ProjectsPresenter();
+    ProjectsPresenter providePresenter() {
+        return mPresenter;
     }
 
     public static ProjectsFragment newInstance() {
