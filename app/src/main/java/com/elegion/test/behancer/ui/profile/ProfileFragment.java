@@ -19,7 +19,7 @@ import com.elegion.test.behancer.data.model.user.User;
 import com.elegion.test.behancer.di.DaggerViewComponent;
 import com.elegion.test.behancer.di.ViewModule;
 import com.elegion.test.behancer.utils.DateUtils;
-import com.squareup.picasso.Picasso;
+import com.elegion.test.behancer.utils.PicassoLoader;
 
 import javax.inject.Inject;
 
@@ -38,6 +38,9 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
     private String mUsername;
     @Inject
     ProfilePresenter mPresenter;
+
+    @Inject
+    PicassoLoader mPicassoLoader;
 
     private ImageView mProfileImage;
     private TextView mProfileName;
@@ -133,10 +136,7 @@ public class ProfileFragment extends PresenterFragment<ProfilePresenter>
     }
 
     private void bind(User user) {
-        Picasso.with(getContext())
-                .load(user.getImage().getPhotoUrl())
-                .fit()
-                .into(mProfileImage);
+        mPicassoLoader.load(getContext(), user.getImage().getPhotoUrl(),mProfileImage);
         mProfileName.setText(user.getDisplayName());
         mProfileCreatedOn.setText(DateUtils.format(user.getCreatedOn()));
         mProfileLocation.setText(user.getLocation());
